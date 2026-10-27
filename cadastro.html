@@ -1,76 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #96759a;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .caixa-login {
-            background-color: white;
-            width: 280px;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 0;
-        }
-
-        form label {
-            display: block;
-            margin: 12px 0 5px;
-            font-size: 14px;
-        }
-
-        form input {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #e39fd2;
-        }
-
-        p {
-            text-align: center;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <div class="caixa-login">
         <h2>Cadastro</h2>
 
@@ -82,33 +18,83 @@
             <input type="email" id="email" placeholder="Digite seu e-mail" required>
 
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" placeholder="Crie uma senha" required>
+            <input type="password" id="senha"
+                placeholder="Crie uma senha" minlength="8" required>
 
             <label for="confirmar">Confirmar senha:</label>
-            <input type="password" id="confirmar" placeholder="Confirme sua senha" required>
+            <input type="password" id="confirmar"
+                placeholder="Confirme sua senha" minlength="8" required>
 
             <button type="submit">Cadastrar</button>
+            <p id="mensagem" role="status"></p>
         </form>
 
         <p>Já tem conta? <a href="login.html">Entrar</a></p>
     </div>
 
     <script>
-        document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+        const formulario = document.getElementById("cadastroForm");
+
+        formulario.addEventListener("submit", function(event) {
             event.preventDefault();
 
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim().toLowerCase();
             const senha = document.getElementById("senha").value;
             const confirmar = document.getElementById("confirmar").value;
+            const mensagem = document.getElementById("mensagem");
 
-            if (senha !== confirmar) {
-                alert("As senhas não coincidem!");
+            mensagem.textContent = "";
+
+            if (nome.length < 2) {
+                mensagem.textContent = "Digite um nome válido.";
                 return;
             }
 
-            alert("Cadastro demonstrativo concluído!");
-            window.location.href = "login.html";
+            if (senha.length < 8) {
+                mensagem.textContent = "A senha deve ter pelo menos 8 caracteres.";
+                return;
+            }
+
+            if (senha !== confirmar) {
+                mensagem.textContent = "As senhas não coincidem.";
+                return;
+            }
+
+            let usuarios = [];
+
+            try {
+                usuarios = JSON.parse(
+                    localStorage.getItem("usuarios") || "[]"
+                );
+
+                if (!Array.isArray(usuarios)) {
+                    usuarios = [];
+                }
+            } catch {
+                mensagem.textContent = "Erro ao consultar os cadastros.";
+                return;
+            }
+
+            const existente = usuarios.some(
+                usuario => usuario.email === email
+            );
+
+            if (existente) {
+                mensagem.textContent = "Este e-mail já está cadastrado.";
+                return;
+            }
+
+            usuarios.push({ nome, email, senha });
+
+            try {
+                localStorage.setItem("usuarios", JSON.stringify(usuarios));
+                alert("Cadastro criado com sucesso! Faça seu login.");
+                window.location.href = "login.html";
+            } catch {
+                mensagem.textContent = "Não foi possível salvar o cadastro.";
+            }
         });
     </script>
-
 </body>
 </html>

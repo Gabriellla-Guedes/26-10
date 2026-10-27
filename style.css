@@ -1,29 +1,32 @@
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #96759a;
-
+    min-height: 100vh;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    min-height: 100vh;
-    margin: 0;
+    padding: 20px;
 }
 
 .caixa-login {
     background-color: #ffffff;
     padding: 25px;
     border-radius: 8px;
-    width: 280px;
-    box-sizing: border-box;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 20px;
+    color: #563d5b;
 }
 
 form {
@@ -33,36 +36,29 @@ form {
 }
 
 label {
-    display: block;
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 input {
     width: 100%;
     padding: 10px;
-    box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 14px;
 }
 
-.link-esqueci {
-    display: block;
-    text-align: right;
-    font-size: 12px;
-    color: #0066cc;
-    text-decoration: none;
-}
-
-.link-esqueci:hover {
-    text-decoration: underline;
+input:focus {
+    outline: 2px solid #96759a;
+    border-color: #96759a;
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #ffffff;
+    padding: 11px;
+    margin-top: 10px;
+    background-color: #96759a;
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -71,48 +67,29 @@ button {
 
 button:hover {
     background-color: #e39fd2;
+    color: #402643;
 }
 
-.btn-menu {
-    display: block;
+p {
     text-align: center;
-    background-color: #dc4ee9;
-    color: #fdd7eb;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
     font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
-.btn-menu:hover {
-    background-color: #ef9ee8;
+a {
+    color: #7a4380;
 }
 
-.foto-perfil {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
+a:hover {
+    color: #d15cae;
 }
 
-.info-usuario {
-    font-size: 14px;
-    margin: 15px 0 0;
-    color: #333333;
-    text-align: center;
+#mensagem {
+    color: #a12646;
+    font-size: 13px;
+    overflow-wrap: anywhere;
 }
 
-.info-usuario a:hover {
-    text-decoration: underline;
-}
-
-body.modoescuro {
-    background-color: #96759a;
-    color: #cccccc;
-}
-
-body.modoescuro .caixa-login {
-    background-color: #ef9ee8;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+.mensagem-sucesso {
+    color: #287a43 !important;
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do usuário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="caixa-login">
+        <h2>Bem-vindo!</h2>
+
+        <p id="boasVindas"></p>
+
+        <button id="btnSair" type="button">Sair</button>
+    </div>
+
+    <script>
+        const dados = sessionStorage.getItem("usuarioLogado");
+
+        if (!dados) {
+            window.location.replace("login.html");
+        } else {
+            const usuario = JSON.parse(dados);
+
+            document.getElementById("boasVindas").textContent =
+                `Olá, ${usuario.nome}! Você entrou com sucesso.`;
+        }
+
+        document.getElementById("btnSair").addEventListener("click", function() {
+            sessionStorage.removeItem("usuarioLogado");
+
+            alert("Sessão encerrada com sucesso!");
+            window.location.replace("login.html");
+        });
+    </script>
+</body>
+</html>
